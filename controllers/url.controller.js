@@ -15,7 +15,9 @@ async function generateNewShortURL(req,res) {
         visitHistory: []
     })
 
-    return res.json({ id: shortId })
+    return res.render('frontend', {
+        id: shortId,
+    })
 }
 
 async function getUrlByShortId(req,res) {

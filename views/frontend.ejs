@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TinyPath</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to right, #eef2f3, #ffffff);
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #4A90E2;
+    }
+
+    .subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 40px;
+  font-weight: 500;
+}
+
+
+    .card {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+
+    .card p {
+      background-color: #e1f7d5;
+      color: #2e7d32;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: 500;
+      word-break: break-word;
+    }
+
+    form label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      transition: 0.3s border;
+    }
+
+    input[type="text"]:focus {
+      border-color: #4A90E2;
+      outline: none;
+    }
+
+    button {
+      background-color: #4A90E2;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #3a76c1;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    thead {
+      background-color: #4A90E2;
+      color: white;
+    }
+
+    th, td {
+      padding: 14px 20px;
+      text-align: center;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    a {
+      color: #4A90E2;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    a:hover {
+      color: #3a76c1;
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 60px;
+      font-size: 0.95rem;
+      color: #888;
+      text-align: center;
+    }
+
+    footer a {
+      color: #4A90E2;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .card, .table-wrapper {
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>TinyPath</h1>
+  <p class="subtitle">Shrink. Share. Track. Instantly.</p>
+  
+  <% if (locals.id) { %>
+    <div class="card">
+      <p>The Tiny Path Generated: 
+        <a href="http://localhost:4000/url/<%= id %>" target="_blank">http://localhost:4000/url/<%= id %></a>
+      </p>
+    </div>
+  <% } %>
+
+  <div class="card">
+    <form method="post" action="/url">
+      <label for="url">Enter Your Original URL</label>
+      <input type="text" id="url" name="url" placeholder="https://example.com" required>
+      <button type="submit">Generate</button>
+    </form>
+  </div>
+
+  <% if (locals.urls) { %>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Sr No.</th>
+            <th>Short ID</th>
+            <th>Redirection Link</th>
+            <th>Total Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% urls.forEach((url, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= url.shortId %></td>
+              <td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
+              <td><%= url.visitHistory.length %></td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <footer>
+    Built with 💙 by <a href="https://www.linkedin.com/in/abdus-samad-shamsi-a61161286/" target="_blank">Abdus Samad</a> · Open Source · 
+    <a href="https://github.com/Abdus-8747/TinyPath" target="_blank">GitHub</a>
+  </footer>
+</body>
+</html>
